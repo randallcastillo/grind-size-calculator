@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffee Grind Size Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Coffee Grind Size Calculator</h1>
+    <p class="subtitle">Convert grind settings between manual grinders using microns as a universal reference</p>
+  </header>
+
+  <main>
+    <!-- Converter Section -->
+    <section class="converter-card">
+      <h2>Grind Setting Converter</h2>
+      <div class="converter-grid">
+        <div class="converter-col">
+          <label for="source-grinder">From Grinder</label>
+          <select id="source-grinder"></select>
+          <label for="source-value">Setting</label>
+          <input type="text" id="source-value" placeholder="e.g. 20">
+          <p class="input-hint" id="source-hint"></p>
+        </div>
+        <div class="converter-arrow">
+          <span id="micron-display">— μm</span>
+          <button id="swap-btn" title="Swap grinders">⇄</button>
+        </div>
+        <div class="converter-col">
+          <label for="target-grinder">To Grinder</label>
+          <select id="target-grinder"></select>
+          <div class="result-box">
+            <span id="result-value">—</span>
+          </div>
+          <p class="result-hint" id="target-hint"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Microns to Grinder Converter -->
+    <section class="converter-card">
+      <h2>Microns to Grinder Setting</h2>
+      <div class="micron-converter-grid">
+        <div class="converter-col">
+          <label for="micron-input">Microns (μm)</label>
+          <input type="number" id="micron-input" placeholder="e.g. 545" min="0" max="1400">
+          <p class="input-hint" id="micron-input-hint">Range: 0–1400 μm</p>
+        </div>
+        <div class="converter-arrow">
+          <span id="micron-category">—</span>
+        </div>
+        <div class="converter-col">
+          <label for="micron-target-grinder">To Grinder</label>
+          <select id="micron-target-grinder"></select>
+          <div class="result-box">
+            <span id="micron-result-value">—</span>
+          </div>
+          <p class="result-hint" id="micron-target-hint"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brew Method Quick Reference -->
+    <section class="brew-card">
+      <h2>Brew Method Quick Reference</h2>
+      <p class="section-desc">Select a brew method to see recommended settings for all grinders</p>
+      <div class="brew-selector">
+        <select id="brew-method"></select>
+      </div>
+      <div class="brew-results" id="brew-results"></div>
+    </section>
+
+    <!-- Grinder Reference Table -->
+    <section class="reference-card">
+      <h2>Full Grinder Reference</h2>
+      <div class="tab-bar" id="grinder-tabs"></div>
+      <div class="reference-table-wrap" id="reference-table"></div>
+    </section>
+
+    <!-- Micron Scale -->
+    <section class="scale-card">
+      <h2>Grind Size Scale</h2>
+      <div class="micron-scale" id="micron-scale"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Data sourced from <a href="https://honestcoffeeguide.com/coffee-grind-size-chart/" target="_blank">Honest Coffee Guide</a>. Grind settings are approximate starting points — always dial in to taste.</p>
+  </footer>
+</div>
+<script src="app.js"></script>
+<script src="grinders.js"></script>
+<script src="converter.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>
