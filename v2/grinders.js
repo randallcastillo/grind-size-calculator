@@ -47,9 +47,9 @@ const GRINDERS = {
       const trimmed = str.trim();
       const p = trimmed.split(".");
       if (p.length === 3) {
-        return (parseInt(p[0])||0)*50 + (parseInt(p[1])||0)*5 + (parseInt(p[2])||0);
+        return (Number.parseInt(p[0])||0)*50 + (Number.parseInt(p[1])||0)*5 + (Number.parseInt(p[2])||0);
       }
-      return parseFloat(trimmed);
+      return Number.parseFloat(trimmed);
     },
     brewMethods: {
       turkish:     { min: 5,   max: 26 },
@@ -65,6 +65,43 @@ const GRINDERS = {
       frenchpress: { min: 83,  max: 150 },
       coldbrew:    { min: 96,  max: 150 },
       colddrip:    { min: 99,  max: 150 },
+    },
+  },
+  timemoreS3: {
+    name: "Timemore Chestnut S3",
+    type: "Manual",
+    // Official manual: 0.015mm (15μm) per click, 0–9.0 range
+    // 90 sub-clicks × 15μm = 1350μm total
+    micronMin: 0,
+    micronMax: 1350,
+    // Stored internally ×10 (e.g. 4.2 clicks = 42)
+    settingMin: 0,
+    settingMax: 90,
+    settingUnit: "clicks",
+    formatSetting(v) {
+      const c = Math.max(0, Math.min(90, Math.round(v)));
+      const display = (c / 10).toFixed(1);
+      return { rnt: display, clicks: display, display: `${display} clicks` };
+    },
+    parseSetting(str) {
+      return Math.round(Number.parseFloat(str.trim()) * 10);
+    },
+    brewMethods: {
+      // Official Timemore sources marked with [T]
+      // Micron-derived ranges marked with [M] (target μm ÷ 15μm/click)
+      turkish:     null,                   // S3 not suitable (CoffeeGeek)
+      espresso:    { min: 1,  max: 15 },   // [T] 0.1–1.5 clicks (timemore.com: 1-15)
+      moka:        { min: 5,  max: 20 },   // [T] 0.5–2.0 clicks (official manual)
+      aeropress:   { min: 21, max: 64 },   // [M] 320–960μm
+      v60:         { min: 27, max: 47 },   // [M] 400–700μm
+      siphon:      { min: 25, max: 53 },   // [M] 375–800μm
+      pourover:    { min: 50, max: 80 },   // [T] 5.0–8.0 clicks (official manual)
+      filter:      { min: 20, max: 60 },   // [M] 300–900μm
+      steep:       { min: 30, max: 55 },   // [M] 450–825μm
+      cupping:     { min: 31, max: 57 },   // [M] 460–850μm
+      frenchpress: { min: 80, max: 90 },   // [T] 8.0–9.0 clicks (official manual)
+      coldbrew:    { min: 53, max: 90 },   // [M] 800–1400μm (capped at 90)
+      colddrip:    { min: 55, max: 85 },   // [M] 820–1270μm
     },
   },
   baratza: {

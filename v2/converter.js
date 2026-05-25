@@ -42,7 +42,7 @@ function formatGrinderSettingRich(grinder, numericVal) {
 
 function parseGrinderSetting(grinder, str) {
   if (grinder.parseSetting) return grinder.parseSetting(str);
-  return parseFloat(str);
+  return Number.parseFloat(str);
 }
 
 function formatBrewRange(grinder, methodId) {
