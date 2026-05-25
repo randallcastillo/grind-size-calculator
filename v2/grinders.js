@@ -68,7 +68,7 @@ const GRINDERS = {
     },
   },
   timemoreS3: {
-    name: "Timemore Chestnut S3",
+    name: "Timemore S3",
     type: "Manual",
     // Official manual: 0.015mm (15μm) per click, 0–9.0 range
     // 90 sub-clicks × 15μm = 1350μm total
@@ -84,7 +84,7 @@ const GRINDERS = {
       return { rnt: display, clicks: display, display: `${display} clicks` };
     },
     parseSetting(str) {
-      return Math.round(Number.parseFloat(str.trim()) * 10);
+      return Math.round(Number.Number.parseFloat(str.trim()) * 10);
     },
     brewMethods: {
       // Official Timemore sources marked with [T]
@@ -102,6 +102,58 @@ const GRINDERS = {
       frenchpress: { min: 80, max: 90 },   // [T] 8.0–9.0 clicks (official manual)
       coldbrew:    { min: 53, max: 90 },   // [M] 800–1400μm (capped at 90)
       colddrip:    { min: 55, max: 85 },   // [M] 820–1270μm
+    },
+  },
+  timemoreC5Pro: {
+    name: "Timemore C5 Pro",
+    type: "Manual",
+    // 0.031mm (31μm) per click, 48 total clicks, 16 macro steps × 3 clicks each
+    // 3-click buffer at zero. Effective range: click 3–48
+    // HCG says 0–950μm; official spec: 48 × 31μm = 1488μm theoretical
+    // Using HCG range as it reflects real-world output
+    micronMin: 0,
+    micronMax: 950,
+    // HCG notation: macro.sub (e.g. 3.2 = macro 3, sub-click 2)
+    // Internally stored as total clicks: macro × 3 + sub
+    // Max setting 16.0 = 48 clicks
+    settingMin: 0,
+    settingMax: 48,
+    settingUnit: "clicks",
+    formatSetting(v) {
+      const c = Math.max(0, Math.min(48, Math.round(v)));
+      const macro = Math.floor(c / 3);
+      const sub = c % 3;
+      const notation = sub === 0 ? `${macro}` : `${macro}.${sub}`;
+      return { rnt: notation, clicks: c, display: `${notation} (${c} clicks)` };
+    },
+    parseSetting(str) {
+      const trimmed = str.trim();
+      const parts = trimmed.split(".");
+      if (parts.length === 2) {
+        return (Number.parseInt(parts[0]) || 0) * 3 + (Number.parseInt(parts[1]) || 0);
+      }
+      // Plain number — could be macro or clicks
+      const num = Number.parseFloat(trimmed);
+      // If > 16, treat as raw clicks; otherwise treat as macro number
+      if (num > 16) return Math.round(num);
+      return Math.round(num * 3);
+    },
+    brewMethods: {
+      // From Honest Coffee Guide (converted to internal click values)
+      // Setting X.Y = X×3 + Y clicks
+      turkish:     { min: 3,  max: 10 },  // 1 – 3.2 (3–10 clicks)
+      espresso:    { min: 9,  max: 18 },  // 3.1 – 6.1 (10–19 clicks) → 9–18
+      moka:        { min: 18, max: 33 },  // 6.1 – 11 (19–33 clicks) → 18–33
+      aeropress:   { min: 16, max: 48 },  // 5.2 – 16 (16–48 clicks)
+      v60:         { min: 21, max: 34 },  // 7 – 11.2 (21–34 clicks)
+      siphon:      { min: 18, max: 39 },  // 6.1 – 13.1 (19–40 clicks) → 18–39
+      pourover:    { min: 21, max: 45 },  // 7 – 15.1 (21–46 clicks) → 21–45
+      filter:      { min: 15, max: 45 },  // 5.1 – 15 (16–45 clicks) → 15–45
+      steep:       { min: 22, max: 40 },  // 7.2 – 13.2 (22–40 clicks)
+      cupping:     { min: 24, max: 42 },  // 8 – 14 (24–42 clicks)
+      frenchpress: { min: 34, max: 48 },  // 11.2 – 16 (34–48 clicks)
+      coldbrew:    { min: 40, max: 48 },  // 13.2 – 16 (40–48 clicks)
+      colddrip:    { min: 42, max: 48 },  // 14 – 16 (42–48 clicks)
     },
   },
   baratza: {

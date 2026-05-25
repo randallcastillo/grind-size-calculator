@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
       catEl.textContent = "—";
       return;
     }
-    const microns = parseFloat(raw);
+    const microns = Number.parseFloat(raw);
     if (isNaN(microns) || microns < 0) {
       resultEl.textContent = "Invalid";
       catEl.textContent = "—";
