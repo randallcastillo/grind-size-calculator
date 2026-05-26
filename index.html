@@ -1330,17 +1330,34 @@ buildBrewTable();
 updateAll();
 </script>
 
-<script>
-  var defined = setInterval(function () {
-    if (window.goatcounter && window.goatcounter.visit_count) {
-      clearInterval(defined);
+  <!-- GoatCounter analytics & visitor counter -->
+  <script>
+    var defined = setInterval(function () {
+      if (window.goatcounter && window.goatcounter.visit_count) {
+        clearInterval(defined);
 
-      var el = document.getElementById('total-views');
-      if (el) el.textContent = window.goatcounter.count.length;
-    }
-  }, 100);
-</script>
-<script data-goatcounter="https://coffee-grind.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+        // var el = document.getElementById('total-views');
+        // if (el) el.textContent = window.goatcounter.count.length;
+
+        let r = new XMLHttpRequest();
+        r.addEventListener('load', function() {
+            var el = document.getElementById('total-views');
+            if (el) el.textContent = JSON.parse(this.responseText).count
+        })
+
+        // Should be exact (encoded) path as it appears in the UI. This uses
+        // GoatCounter's count.js
+        let path = window.goatcounter.get_data()['p']
+        // Or alternatively, do it manually. Will return HTTP status 404 if the
+        // path is not found).
+        //let path = location.pathname
+
+        r.open('GET', 'https://coffee-grind.goatcounter.com/counter/' + encodeURIComponent(path) + '.json')
+        r.send()
+      }
+    }, 100);
+  </script>
+  <script data-goatcounter="https://coffee-grind.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 </body>
 </html>
