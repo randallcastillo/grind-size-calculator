@@ -88,8 +88,32 @@
   </main>
 
   <footer>
+    <div class="visit-counter" id="visit-counter">
+      <span class="counter-item"><span class="counter-label">Page Views</span><span class="counter-value" id="total-views">—</span></span>
+    </div>
     <p>Data sourced from <a href="https://honestcoffeeguide.com/coffee-grind-size-chart/" target="_blank">Honest Coffee Guide</a>. Grind settings are approximate starting points — always dial in to taste.</p>
   </footer>
+  
+  <!-- GoatCounter analytics & visitor counter -->
+  <!-- Replace MYCODE with your GoatCounter site code (e.g. coffee-grind) -->
+  <script>
+    var defined = setInterval(function () {
+      if (globalThis.goatcounter && globalThis.goatcounter.visit_count) {
+        clearInterval(defined);
+        // Fetch total site views via JSON and display in footer
+        var r = new XMLHttpRequest();
+        r.addEventListener('load', function () {
+          var data = JSON.parse(this.responseText);
+          var el = document.getElementById('total-views');
+          if (el) el.textContent = data.count;
+        });
+        r.open('GET', 'https://coffee-grind.goatcounter.com/counter/TOTAL.json');
+        r.send();
+      }
+    }, 100);
+  </script>
+  <script data-goatcounter="https://coffee-grind.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
 </div>
 <script src="app.js"></script>
 <script src="grinders.js"></script>

@@ -53,6 +53,10 @@ tr:hover td{background:var(--surface2)}
 .scale-bar-wrap{flex:1;height:22px;background:var(--surface2);border-radius:4px;position:relative;overflow:hidden}
 .scale-bar{height:100%;border-radius:4px;position:absolute}
 .scale-range{font-size:.75rem;color:var(--text2);width:110px;flex-shrink:0}
+.visit-counter{display:flex;justify-content:center;align-items:center;margin-bottom:16px}
+.counter-item{display:flex;flex-direction:column;align-items:center;gap:2px}
+.counter-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)}
+.counter-value{font-size:1.1rem;font-weight:700;color:var(--accent)}
 footer{text-align:center;padding:32px 0 16px;color:var(--text2);font-size:.8rem}
 footer a{color:var(--accent);text-decoration:none}
 footer a:hover{text-decoration:underline}
