@@ -93,21 +93,38 @@
       <span class="counter-item"><span class="counter-label">Page Views</span><span class="counter-value" id="total-views">—</span></span>
     </div>
   </footer>
-  
+
   <!-- GoatCounter analytics & visitor counter -->
-  <!-- Replace MYCODE with your GoatCounter site code (e.g. coffee-grind) -->
   <script>
     var defined = setInterval(function () {
       if (window.goatcounter && window.goatcounter.visit_count) {
         clearInterval(defined);
 
-        var el = document.getElementById('total-views');
-        if (el) el.textContent = window.goatcounter.count.length;
+        // var el = document.getElementById('total-views');
+        // if (el) el.textContent = window.goatcounter.count.length;
+
+        let r = new XMLHttpRequest();
+        r.addEventListener('load', function() {
+            var el = document.getElementById('total-views');
+            if (el) el.textContent = JSON.parse(this.responseText).count
+        })
+
+        // Should be exact (encoded) path as it appears in the UI. This uses
+        // GoatCounter's count.js
+        let path = window.goatcounter.get_data()['p']
+
+        // Or alternatively, do it manually. Will return HTTP status 404 if the
+        // path is not found).
+        //let path = location.pathname
+
+        r.open('GET', 'https://coffee-grind.goatcounter.com/counter/' + encodeURIComponent(path) + '.json')
+        r.send()
       }
     }, 100);
   </script>
+
   <script data-goatcounter="https://coffee-grind.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-  
+
 </div>
 <script src="app.js"></script>
 <script src="grinders.js"></script>
