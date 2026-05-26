@@ -34,6 +34,40 @@
       line-height: 1.5;
     }
 
+    /* ── Version Banner ─────────────────────────────────────── */
+    .v2-banner {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.65rem 1rem;
+      background: linear-gradient(90deg, rgba(200,148,43,0.2), rgba(224,184,75,0.2));
+      border-bottom: 1px solid rgba(200,148,43,0.35);
+      backdrop-filter: blur(8px);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .v2-banner a {
+      display: inline-block;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(200,148,43,0.5);
+      background: rgba(200,148,43,0.18);
+      color: var(--cream);
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+    .v2-banner a:hover {
+      background: rgba(200,148,43,0.32);
+      border-color: var(--gold);
+      color: #fff9ea;
+    }
+
     /* ── Header ─────────────────────────────────────────────── */
     header {
       text-align: center;
@@ -506,6 +540,11 @@
   </style>
 </head>
 <body>
+
+<div class="v2-banner">
+  <span>Try the updated calculator experience</span>
+  <a href="v2/">Go to Version 2</a>
+</div>
 
 <header>
   <span class="header-icon">☕</span>
