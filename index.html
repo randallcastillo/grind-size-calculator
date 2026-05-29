@@ -555,7 +555,7 @@
 <header>
   <span class="header-icon">☕</span>
   <h1>Coffee Grind Size Calculator</h1>
-  <p>Convert settings between Timemore C5 ESP Pro · Timemore C5 Pro · Timemore S3 · Comandante C40 MK4 · Baratza Encore</p>
+  <p>Convert settings between Baratza Encore · Comandante C40 MK4 · Timemore C3 ESP Pro · Timemore C5 ESP Pro · Timemore C5 Pro · Timemore S3</p>
 </header>
 
 <main>
@@ -574,7 +574,16 @@
       </div>
 
       <div class="grinder-tabs">
-        <button class="g-tab active" id="tab-timemore" onclick="selectGrinder('timemore')">
+        <button class="g-tab active" id="tab-baratza" onclick="selectGrinder('baratza')">
+          <strong>Baratza</strong>Encore
+        </button>
+        <button class="g-tab" id="tab-comandante" onclick="selectGrinder('comandante')">
+          <strong>Comandante</strong>C40 MK4
+        </button>
+        <button class="g-tab" id="tab-c3esp" onclick="selectGrinder('c3esp')">
+          <strong>Timemore</strong>C3 ESP Pro
+        </button>
+        <button class="g-tab" id="tab-timemore" onclick="selectGrinder('timemore')">
           <strong>Timemore</strong>C5 ESP Pro
         </button>
         <button class="g-tab" id="tab-c5pro" onclick="selectGrinder('c5pro')">
@@ -583,16 +592,10 @@
         <button class="g-tab" id="tab-s3" onclick="selectGrinder('s3')">
           <strong>Timemore</strong>S3
         </button>
-        <button class="g-tab" id="tab-comandante" onclick="selectGrinder('comandante')">
-          <strong>Comandante</strong>C40 MK4
-        </button>
-        <button class="g-tab" id="tab-baratza" onclick="selectGrinder('baratza')">
-          <strong>Baratza</strong>Encore
-        </button>
       </div>
 
       <!-- Timemore Panel -->
-      <div class="panel active" id="panel-timemore">
+      <div class="panel" id="panel-timemore">
         <div class="input-label">Setting — Rotations . Number . Tick</div>
         <div class="tm-spinners">
           <div class="spinner-col">
@@ -657,8 +660,38 @@
         <p class="hint">Each click ≈ 27.3 μm · Red Clix upgrade halves each step to ~13.6 μm</p>
       </div>
 
+      <!-- Timemore C3 ESP Pro Panel -->
+      <div class="panel" id="panel-c3esp">
+        <div class="input-label">Setting — Rotations . Number . Tick</div>
+        <div class="tm-spinners">
+          <div class="spinner-col">
+            <button class="sp-btn" onclick="adjC3Spinner('r',1)">▲</button>
+            <div class="sp-val" id="sv-c3r">0</div>
+            <button class="sp-btn" onclick="adjC3Spinner('r',-1)">▼</button>
+            <div class="sp-lbl">Rot.</div>
+          </div>
+          <div class="dot-sep">.</div>
+          <div class="spinner-col">
+            <button class="sp-btn" onclick="adjC3Spinner('n',1)">▲</button>
+            <div class="sp-val" id="sv-c3n">0</div>
+            <button class="sp-btn" onclick="adjC3Spinner('n',-1)">▼</button>
+            <div class="sp-lbl">Num.</div>
+          </div>
+          <div class="dot-sep">.</div>
+          <div class="spinner-col">
+            <button class="sp-btn" onclick="adjC3Spinner('t',1)">▲</button>
+            <div class="sp-val" id="sv-c3t">0</div>
+            <button class="sp-btn" onclick="adjC3Spinner('t',-1)">▼</button>
+            <div class="sp-lbl">Tick</div>
+          </div>
+        </div>
+        <p class="hint" style="margin-top:0.8rem">
+          23.3 μm per click · 30 clicks per rotation · 3 rotations max (90 clicks)
+        </p>
+      </div>
+
       <!-- Baratza Panel -->
-      <div class="panel" id="panel-baratza">
+      <div class="panel active" id="panel-baratza">
         <div class="input-label">Step Setting (0 – 40)</div>
         <div class="num-ctrl">
           <button class="num-btn" onclick="adjSteps(-1)">−</button>
@@ -714,12 +747,12 @@
 
   <!-- ── Converted Settings ─────────────────────────────────── -->
   <div class="grid-3">
-    <div class="res-card source" id="rc-timemore">
-      <div class="res-brand">Timemore</div>
-      <div class="res-model">C5 ESP Pro</div>
-      <div class="res-setting" id="rv-timemore">0.0.0</div>
-      <div class="res-unit">Rotation . Number . Tick</div>
-      <div class="res-approx" id="ra-timemore">≈ 0 μm</div>
+    <div class="res-card source" id="rc-baratza">
+      <div class="res-brand">Baratza</div>
+      <div class="res-model">Encore</div>
+      <div class="res-setting" id="rv-baratza">0</div>
+      <div class="res-unit">Step setting</div>
+      <div class="res-approx" id="ra-baratza">≈ 250 μm</div>
     </div>
     <div class="res-card" id="rc-comandante">
       <div class="res-brand">Comandante</div>
@@ -727,6 +760,20 @@
       <div class="res-setting" id="rv-comandante">0</div>
       <div class="res-unit">Clicks from zero</div>
       <div class="res-approx" id="ra-comandante">≈ 0 μm</div>
+    </div>
+    <div class="res-card" id="rc-c3esp">
+      <div class="res-brand">Timemore</div>
+      <div class="res-model">C3 ESP Pro</div>
+      <div class="res-setting" id="rv-c3esp">0.0.0</div>
+      <div class="res-unit">Rotation . Number . Tick</div>
+      <div class="res-approx" id="ra-c3esp">≈ 0 μm</div>
+    </div>
+    <div class="res-card" id="rc-timemore">
+      <div class="res-brand">Timemore</div>
+      <div class="res-model">C5 ESP Pro</div>
+      <div class="res-setting" id="rv-timemore">0.0.0</div>
+      <div class="res-unit">Rotation . Number . Tick</div>
+      <div class="res-approx" id="ra-timemore">≈ 0 μm</div>
     </div>
     <div class="res-card" id="rc-c5pro">
       <div class="res-brand">Timemore</div>
@@ -741,13 +788,6 @@
       <div class="res-setting" id="rv-s3">0.0</div>
       <div class="res-unit">Clicks from zero</div>
       <div class="res-approx" id="ra-s3">≈ 330 μm</div>
-    </div>
-    <div class="res-card" id="rc-baratza">
-      <div class="res-brand">Baratza</div>
-      <div class="res-model">Encore</div>
-      <div class="res-setting" id="rv-baratza">0</div>
-      <div class="res-unit">Step setting</div>
-      <div class="res-approx" id="ra-baratza">≈ 250 μm</div>
     </div>
   </div>
 
@@ -767,11 +807,12 @@
           <tr>
             <th>Brew Method</th>
             <th>Micron Range</th>
+            <th>Baratza Encore</th>
+            <th>Comandante C40 MK4</th>
+            <th>Timemore C3 ESP Pro</th>
             <th>Timemore C5 ESP Pro</th>
             <th>Timemore C5 Pro</th>
             <th>Timemore S3</th>
-            <th>Comandante C40 MK4</th>
-            <th>Baratza Encore</th>
           </tr>
         </thead>
         <tbody id="brew-tbody"></tbody>
@@ -786,13 +827,12 @@
     <p class="notes">
       <strong>About these conversions &amp; data sources</strong><br>
       Settings are approximated via linear interpolation based on each grinder's published micron range.
-      <strong>Timemore C5 ESP Pro</strong>: 0 – 1,250 μm across 150 total steps (0.0.0 → 3.0.0), ≈ 8.3 μm per step.
-      <strong>Timemore C5 Pro</strong>: 0 – 950 μm across dial settings 1.0 → 16.0.
-      <strong>Timemore S3</strong>: 330 – 1,110 μm across clicks from zero 0.0 → 9.0.
+      <strong>Baratza Encore</strong>: 250 – 1,200 μm across 40 steps, ≈ 23.75 μm per step.
       <strong>Comandante C40 MK4</strong>: 0 – 1,090 μm across 40 clicks, ≈ 27.3 μm per click.
-      <strong>Baratza Encore</strong>: 250 – 1,200 μm across 40 steps, ≈ 23.75 μm per step.<br><br>
-      The Timemore notation <em>R.N.T</em> reads as: R = full rotations (0–3), N = number mark (0–9), T = tick between marks (0–4).
-      Each full rotation contains 50 steps (10 numbers × 5 ticks).<br><br>
+      <strong>Timemore C3 ESP Pro</strong>: 0 – 1,009 μm across 90 clicks (0.0.0 → 3.0.0), ≈ 11.2 μm per click. R.N.T notation: 10 numbers × 3 ticks = 30 clicks per rotation.
+      <strong>Timemore C5 ESP Pro</strong>: 0 – 1,250 μm across 150 total steps (0.0.0 → 3.0.0), ≈ 8.3 μm per step. R.N.T notation: 10 numbers × 5 ticks = 50 steps per rotation.
+      <strong>Timemore C5 Pro</strong>: 0 – 950 μm across dial settings 1.0 → 16.0.
+      <strong>Timemore S3</strong>: 330 – 1,110 μm across clicks from zero 0.0 → 9.0.<br><br>
       Real-world grind size varies with bean density, roast level, humidity, and burr condition.
       Use these values as starting points and dial in to taste.
       Brew method ranges sourced from
@@ -840,6 +880,13 @@ const S3 = {
   maxMicrons: 1110,
   get micronsPerStep() { return (this.maxMicrons - this.minMicrons) / (this.maxSetting - this.minSetting); }
 };
+const C3E = {
+  stepsPerRot: 30,   // 10 numbers × 3 ticks
+  maxRot: 3,
+  maxSteps: 90,
+  maxMicrons: 1009,
+  get micronsPerStep() { return this.maxMicrons / this.maxSteps; }  // ≈ 11.21
+};
 const CMD = {
   maxClicks: 40,
   maxMicrons: 1090,
@@ -871,15 +918,17 @@ const METHODS = [
     name: 'Turkish',        icon: '🫖',
     micronMin:  40, micronMax:  220,
     tm:  { lo: '0.1.0', hi: '0.5.1' },
+    c3esp: { lo: '0.1.1', hi: '0.6.1' },
     c5pro: { lo: '1.0', hi: '3.2' },
     s3: null,
     cmd: { lo: 2,   hi: 8   },
-    bar: null   // cannot grind fine enough
+    bar: null
   },
   {
     name: 'Espresso',       icon: '☕',
     micronMin: 183, micronMax:  380,
     tm:  { lo: '0.4.2', hi: '0.9.0' },
+    c3esp: { lo: '0.5.2', hi: '1.1.0' },
     c5pro: { lo: '3.1', hi: '6.1' },
     s3: { lo: '0.0', hi: '0.5' },
     cmd: { lo: 7,   hi: 13  },
@@ -889,6 +938,7 @@ const METHODS = [
     name: 'Moka Pot',       icon: '🏺',
     micronMin: 367, micronMax:  660,
     tm:  { lo: '0.8.4', hi: '1.5.4' },
+    c3esp: { lo: '1.1.0', hi: '1.9.1' },
     c5pro: { lo: '6.1', hi: '11.0' },
     s3: { lo: '0.4', hi: '3.8' },
     cmd: { lo: 14,  hi: 24  },
@@ -898,6 +948,7 @@ const METHODS = [
     name: 'Aeropress',      icon: '🧪',
     micronMin: 325, micronMax:  960,
     tm:  { lo: '0.7.4', hi: '2.3.0' },
+    c3esp: { lo: '0.9.2', hi: '2.8.1' },
     c5pro: { lo: '5.2', hi: '16.0' },
     s3: { lo: '0.0', hi: '7.2' },
     cmd: { lo: 12,  hi: 35  },
@@ -907,6 +958,7 @@ const METHODS = [
     name: 'V60',            icon: '▽',
     micronMin: 400, micronMax:  700,
     tm:  { lo: '0.9.3', hi: '1.6.4' },
+    c3esp: { lo: '1.2.0', hi: '2.0.2' },
     c5pro: { lo: '7.0', hi: '11.2' },
     s3: { lo: '0.9', hi: '4.2' },
     cmd: { lo: 15,  hi: 25  },
@@ -916,6 +968,7 @@ const METHODS = [
     name: 'Siphon',         icon: '⚗️',
     micronMin: 375, micronMax:  800,
     tm:  { lo: '0.9.0', hi: '1.9.1' },
+    c3esp: { lo: '1.1.1', hi: '2.3.2' },
     c5pro: { lo: '6.1', hi: '13.1' },
     s3: { lo: '0.6', hi: '5.4' },
     cmd: { lo: 14,  hi: 29  },
@@ -925,6 +978,7 @@ const METHODS = [
     name: 'Pour Over',      icon: '🫗',
     micronMin: 417, micronMax:  927,
     tm:  { lo: '1.0.0', hi: '2.2.1' },
+    c3esp: { lo: '1.2.1', hi: '2.7.1' },
     c5pro: { lo: '7.0', hi: '15.1' },
     s3: { lo: '1.0', hi: '6.9' },
     cmd: { lo: 16,  hi: 34  },
@@ -934,6 +988,7 @@ const METHODS = [
     name: 'Filter Machine', icon: '🔌',
     micronMin: 300, micronMax:  893,
     tm:  { lo: '0.7.1', hi: '2.1.2' },
+    c3esp: { lo: '0.9.0', hi: '2.6.2' },
     c5pro: { lo: '5.1', hi: '15.0' },
     s3: { lo: '0.0', hi: '6.5' },
     cmd: { lo: 12,  hi: 33  },
@@ -943,6 +998,7 @@ const METHODS = [
     name: 'Steep & Release',icon: '🔵',
     micronMin: 450, micronMax:  820,
     tm:  { lo: '1.0.4', hi: '1.9.3' },
+    c3esp: { lo: '1.3.2', hi: '2.4.1' },
     c5pro: { lo: '7.2', hi: '13.2' },
     s3: { lo: '1.4', hi: '5.7' },
     cmd: { lo: 17,  hi: 30  },
@@ -952,6 +1008,7 @@ const METHODS = [
     name: 'Cupping',        icon: '🍵',
     micronMin: 467, micronMax:  845,
     tm:  { lo: '1.1.1', hi: '2.0.1' },
+    c3esp: { lo: '1.4.0', hi: '2.5.0' },
     c5pro: { lo: '8.0', hi: '14.0' },
     s3: { lo: '1.5', hi: '6.0' },
     cmd: { lo: 17,  hi: 31  },
@@ -961,6 +1018,7 @@ const METHODS = [
     name: 'French Press',   icon: '🫖',
     micronMin: 692, micronMax: 1090,
     tm:  { lo: '1.6.3', hi: '3.0.0' },
+    c3esp: { lo: '2.0.2', hi: '3.0.0' },
     c5pro: { lo: '11.2', hi: '16.0' },
     s3: { lo: '4.2', hi: '9.0' },
     cmd: { lo: 26,  hi: 40  },
@@ -970,6 +1028,7 @@ const METHODS = [
     name: 'Cold Drip',      icon: '🧊',
     micronMin: 825, micronMax: 1090,
     tm:  { lo: '1.9.4', hi: '3.0.0' },
+    c3esp: { lo: '2.4.2', hi: '3.0.0' },
     c5pro: { lo: '14.0', hi: '16.0' },
     s3: { lo: '5.7', hi: '9.0' },
     cmd: { lo: 31,  hi: 40  },
@@ -979,6 +1038,7 @@ const METHODS = [
     name: 'Cold Brew',      icon: '🧊',
     micronMin: 800, micronMax: 1090,
     tm:  { lo: '1.9.1', hi: '3.0.0' },
+    c3esp: { lo: '2.4.0', hi: '3.0.0' },
     c5pro: { lo: '13.2', hi: '16.0' },
     s3: { lo: '5.5', hi: '9.0' },
     cmd: { lo: 30,  hi: 40  },
@@ -1000,6 +1060,18 @@ function micronsToTm(µ) {
   const rem = steps % TM.stepsPerRot;
   const n = Math.floor(rem / 5);
   const t = rem % 5;
+  return { r, n, t };
+}
+
+function c3eToMicrons(r, n, t) {
+  return (r * C3E.stepsPerRot + n * 3 + t) * C3E.micronsPerStep;
+}
+function micronsToC3e(µ) {
+  const steps = Math.round(Math.min(C3E.maxSteps, Math.max(0, µ / C3E.micronsPerStep)));
+  const r = Math.floor(steps / C3E.stepsPerRot);
+  const rem = steps % C3E.stepsPerRot;
+  const n = Math.floor(rem / 3);
+  const t = rem % 3;
   return { r, n, t };
 }
 
@@ -1034,12 +1106,13 @@ function formatDial(v) { return Number(v).toFixed(1); }
    APP STATE
 ═══════════════════════════════════════════════════════════════ */
 
-let activeGrinder = 'timemore';
+let activeGrinder = 'baratza';
 let currentMicrons = 0;
 
 // Per-grinder state
 const state = {
   timemore:   { r: 0, n: 0, t: 0 },
+  c3esp:      { r: 0, n: 0, t: 0 },
   c5pro:      { setting: 1 },
   s3:         { setting: 0 },
   comandante: { clicks: 0 },
@@ -1052,7 +1125,7 @@ const state = {
 
 function selectGrinder(g) {
   activeGrinder = g;
-  ['timemore', 'c5pro', 's3', 'comandante', 'baratza'].forEach(id => {
+  ['baratza', 'comandante', 'c3esp', 'timemore', 'c5pro', 's3'].forEach(id => {
     document.getElementById('tab-'   + id).classList.toggle('active', id === g);
     document.getElementById('panel-' + id).classList.toggle('active', id === g);
     document.getElementById('rc-'    + id).classList.toggle('source', id === g);
@@ -1076,6 +1149,19 @@ function adjSpinner(field, d) {
   document.getElementById('sv-r').textContent = s.r;
   document.getElementById('sv-n').textContent = s.n;
   document.getElementById('sv-t').textContent = s.t;
+  computeMicrons(); updateAll();
+}
+
+function adjC3Spinner(field, d) {
+  const s = state.c3esp;
+  if (field === 'r') s.r = clamp(s.r + d, 0, 3);
+  if (field === 'n') s.n = clamp(s.n + d, 0, 9);
+  if (field === 't') s.t = clamp(s.t + d, 0, 2);
+  // Cap at 3.0.0
+  if (s.r === 3) { s.n = 0; s.t = 0; }
+  document.getElementById('sv-c3r').textContent = s.r;
+  document.getElementById('sv-c3n').textContent = s.n;
+  document.getElementById('sv-c3t').textContent = s.t;
   computeMicrons(); updateAll();
 }
 
@@ -1148,6 +1234,9 @@ function computeMicrons() {
   if (activeGrinder === 'timemore') {
     const { r, n, t } = state.timemore;
     currentMicrons = tmToMicrons(r, n, t);
+  } else if (activeGrinder === 'c3esp') {
+    const { r, n, t } = state.c3esp;
+    currentMicrons = c3eToMicrons(r, n, t);
   } else if (activeGrinder === 'c5pro') {
     currentMicrons = c5ProToMicrons(state.c5pro.setting);
   } else if (activeGrinder === 's3') {
@@ -1173,6 +1262,12 @@ function jumpToMethod(method) {
     document.getElementById('sv-r').textContent = r;
     document.getElementById('sv-n').textContent = n;
     document.getElementById('sv-t').textContent = t;
+  } else if (activeGrinder === 'c3esp') {
+    const { r, n, t } = micronsToC3e(µ);
+    state.c3esp = { r, n, t };
+    document.getElementById('sv-c3r').textContent = r;
+    document.getElementById('sv-c3n').textContent = n;
+    document.getElementById('sv-c3t').textContent = t;
   } else if (activeGrinder === 'c5pro') {
     state.c5pro.setting = round1(micronsToC5Pro(µ));
     syncC5ProUI();
@@ -1226,6 +1321,17 @@ function updateAll() {
   const tmµ = Math.round(tmToMicrons(tm.r, tm.n, tm.t));
   document.getElementById('rv-timemore').textContent = tmStr(tm.r, tm.n, tm.t);
   document.getElementById('ra-timemore').textContent = `≈ ${tmµ} μm`;
+
+  // --- Timemore C3 ESP Pro
+  const c3e = micronsToC3e(µ);
+  const c3eµ = Math.round(c3eToMicrons(c3e.r, c3e.n, c3e.t));
+  if (µ > C3E.maxMicrons) {
+    document.getElementById('rv-c3esp').innerHTML = '<span class="oor">Max (3.0.0)</span>';
+    document.getElementById('ra-c3esp').textContent = '≈ 1,009 μm (max)';
+  } else {
+    document.getElementById('rv-c3esp').textContent = tmStr(c3e.r, c3e.n, c3e.t);
+    document.getElementById('ra-c3esp').textContent = `≈ ${c3eµ} μm`;
+  }
 
   // --- Timemore C5 Pro
   if (µ > C5P.maxMicrons) {
@@ -1290,6 +1396,10 @@ function buildBrewTable() {
     const tr = document.createElement('tr');
     tr.onclick = () => jumpToMethod(m);
 
+    const c3espCell = m.c3esp
+      ? `${m.c3esp.lo} – ${m.c3esp.hi}`
+      : '<span class="na">N/A</span>';
+
     const c5ProCell = m.c5pro
       ? `${m.c5pro.lo} – ${m.c5pro.hi}`
       : '<span class="na">N/A</span>';
@@ -1305,11 +1415,12 @@ function buildBrewTable() {
     tr.innerHTML = `
       <td><div class="meth-cell"><span class="meth-icon">${m.icon}</span><span>${m.name}</span></div></td>
       <td class="micron-range">${m.micronMin} – ${m.micronMax} μm</td>
+      <td>${barCell}</td>
+      <td>${m.cmd.lo} – ${m.cmd.hi} clicks</td>
+      <td>${c3espCell}</td>
       <td>${m.tm.lo} – ${m.tm.hi}</td>
       <td>${c5ProCell}</td>
       <td>${s3Cell}</td>
-      <td>${m.cmd.lo} – ${m.cmd.hi} clicks</td>
-      <td>${barCell}</td>
     `;
     tbody.appendChild(tr);
   });
