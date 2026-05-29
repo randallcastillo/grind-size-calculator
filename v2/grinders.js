@@ -84,7 +84,7 @@ const GRINDERS = {
       return { rnt: display, clicks: display, display: `${display} clicks` };
     },
     parseSetting(str) {
-      return Math.round(Number.Number.parseFloat(str.trim()) * 10);
+      return Math.round(Number.parseFloat(str.trim()) * 10);
     },
     brewMethods: {
       // Official Timemore sources marked with [T]
@@ -154,6 +154,50 @@ const GRINDERS = {
       frenchpress: { min: 34, max: 48 },  // 11.2 – 16 (34–48 clicks)
       coldbrew:    { min: 40, max: 48 },  // 13.2 – 16 (40–48 clicks)
       colddrip:    { min: 42, max: 48 },  // 14 – 16 (42–48 clicks)
+    },
+  },
+  timemoreC3Esp: {
+    name: "Timemore C3 ESP Pro",
+    type: "Manual",
+    // 23.3μm per click, 30 clicks per rotation, 3 rotations max = 90 clicks
+    // R.N.T notation: each rotation = 10 numbers × 3 ticks = 30 clicks
+    // HCG range: 0–1009μm
+    micronMin: 0,
+    micronMax: 1009,
+    settingMin: 0,
+    settingMax: 90,
+    settingUnit: "clicks",
+    formatSetting(v) {
+      const c = Math.max(0, Math.min(90, Math.round(v)));
+      const rot = Math.floor(c / 30);
+      const rem = c % 30;
+      const num = Math.floor(rem / 3);
+      const tick = rem % 3;
+      const rnt = `${rot}.${num}.${tick}`;
+      return { rnt, clicks: c, display: `${rnt} (${c} clicks)` };
+    },
+    parseSetting(str) {
+      const trimmed = str.trim();
+      const p = trimmed.split(".");
+      if (p.length === 3) {
+        return (Number.parseInt(p[0])||0)*30 + (Number.parseInt(p[1])||0)*3 + (Number.parseInt(p[2])||0);
+      }
+      return Number.parseFloat(trimmed);
+    },
+    brewMethods: {
+      turkish:     { min: 4,  max: 19 },  // 0.1.1 – 0.6.1
+      espresso:    { min: 17, max: 33 },  // 0.5.2 – 1.1.0
+      moka:        { min: 33, max: 58 },  // 1.1.0 – 1.9.1
+      aeropress:   { min: 29, max: 85 },  // 0.9.2 – 2.8.1
+      v60:         { min: 36, max: 62 },  // 1.2.0 – 2.0.2
+      siphon:      { min: 34, max: 71 },  // 1.1.1 – 2.3.2
+      pourover:    { min: 37, max: 82 },  // 1.2.1 – 2.7.1
+      filter:      { min: 27, max: 80 },  // 0.9.0 – 2.6.2
+      steep:       { min: 41, max: 73 },  // 1.3.2 – 2.4.1
+      cupping:     { min: 42, max: 75 },  // 1.4.0 – 2.5.0
+      frenchpress: { min: 62, max: 90 },  // 2.0.2 – 3.0.0
+      coldbrew:    { min: 72, max: 90 },  // 2.4.0 – 3.0.0
+      colddrip:    { min: 74, max: 90 },  // 2.4.2 – 3.0.0
     },
   },
   baratza: {

@@ -1,6 +1,7 @@
 // UI initialization and event handling
 document.addEventListener("DOMContentLoaded", () => {
-  const grinderKeys = Object.keys(GRINDERS);
+  const grinderKeys = Object.keys(GRINDERS).sort((a, b) =>
+    GRINDERS[a].name.localeCompare(GRINDERS[b].name));
 
   // Populate grinder selects
   const srcSelect = document.getElementById("source-grinder");
