@@ -14,7 +14,6 @@ const BREW_METHODS = [
   { id: "steep",         name: "Steep-and-Release",    icon: "⏳", micronMin: 450, micronMax: 825 },
   { id: "cupping",       name: "Cupping",              icon: "🥄", micronMin: 460, micronMax: 850 },
   { id: "frenchpress",   name: "French Press",         icon: "🫗", micronMin: 690, micronMax: 1300 },
-
   { id: "coldbrew",      name: "Cold Brew",            icon: "🧊", micronMin: 800, micronMax: 1400 },
   { id: "colddrip",      name: "Cold Drip",            icon: "❄️", micronMin: 820, micronMax: 1270 },
 ];
