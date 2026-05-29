@@ -5,3 +5,5 @@ serve.js
 dist/
 *.zip
 *.tar.gz
+.devcontainer/
+.vscode/
